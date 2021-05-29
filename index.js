@@ -4,17 +4,18 @@ const bodyParser = require('body-parser');
 var cors = require('cors')
 const app = express();
 var dbconnection = require('./middleware/dbconnection'); 
+var userRoutes = require('./routes/user'); 
 
 const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(app);
-// const config = require('./config/config');
-// const router = require('./router');
-// var dbconnection = require('./middleware/dbconnection'); 
+dbconnection.connect();
 
- dbconnection.connect();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/api', userRoutes);
+
 server.listen(PORT, () => console.log(`Server has been started in port: ${PORT}`));
